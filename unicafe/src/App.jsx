@@ -2,9 +2,14 @@ import { useState } from 'react'
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
-
-const StatisticsLine = ({ text, value, type }) => <>{text} {value} {type}<br /></>
-
+const StatisticsLine = ({ text, value, type }) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value} {type}</td>
+    </tr>
+  )
+}
 
 const Statistics = ({ good, neutral, bad }) => {
   const all = good + neutral + bad
@@ -14,12 +19,16 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <div>
       <h1>statistics</h1>
-      <StatisticsLine text='good' value={good} />
-      <StatisticsLine text='neutral' value={neutral} />
-      <StatisticsLine text='bad' value={bad} />
-      <StatisticsLine text='all' value={all} />
-      <StatisticsLine text='average' value={(good - bad) / all} />
-      <StatisticsLine text='positive' value={(good / all) * 100} type='%' />
+      <table>
+        <tbody>
+          <StatisticsLine text='good' value={good} />
+          <StatisticsLine text='neutral' value={neutral} />
+          <StatisticsLine text='bad' value={bad} />
+          <StatisticsLine text='all' value={all} />
+          <StatisticsLine text='average' value={(good - bad) / all} />
+          <StatisticsLine text='positive' value={(good / all) * 100} type='%' />
+        </tbody>
+      </table>
     </div>
   )
 }
