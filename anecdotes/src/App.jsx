@@ -1,15 +1,32 @@
 import { useState } from 'react'
 
-const Display = ({ anecdotes, selected }) => {
-  return (
-    <p>{anecdotes[selected]}</p>
-  )
-}
-
 const Button = ({ text, onClick }) => {
   return (
     <button onClick={onClick}>{text}</button>
   )
+}
+
+const AnecdoteOfTheDay = ({ anecdotes, selected }) => {
+  return (
+    <>
+      <h1>Anecdote of the day</h1>
+      <p>{anecdotes[selected]}</p>
+    </>
+  )
+}
+
+const AnecdoteWithMostVotes = ({ anecdotes, votes }) => {
+  const totalVotes = votes.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const maxVotesIndex = votes.indexOf(Math.max(...votes));
+  if (totalVotes !== 0) {
+    return (
+      <>
+        <h1>Anecdote with most votes</h1>
+        <p>{anecdotes[maxVotesIndex]}</p>
+        <p>has {votes[maxVotesIndex]} votes</p>
+      </>
+    )
+  }
 }
 
 const getRandomInt = (min, max) => {
@@ -45,9 +62,10 @@ const App = () => {
 
   return (
     <div>
-      <Display anecdotes={anecdotes} selected={selected} />
+      <AnecdoteOfTheDay anecdotes={anecdotes} selected={selected} />
       <Button onClick={() => handleVote(votes, selected)} text='vote' />
       <Button onClick={() => setSelected(getRandomInt(0, 7))} text='next anecdote' />
+      <AnecdoteWithMostVotes anecdotes={anecdotes} votes={votes} />
     </div>
   )
 }
